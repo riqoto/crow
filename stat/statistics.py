@@ -3,16 +3,58 @@ from data import Data
 
 
 class Statistics:
+    """
+    İstatistiksel hesaplamaları yapan sınıf.
+
+    Yüklenen veri seti üzerinde ortalama, varyans ve medyan gibi
+    temel istatistiksel analizleri gerçekleştirir.
+
+    Attributes:
+        data (PD.DataFrame | None): Analiz edilecek veri seti.
+    """
     def Load(self, data: Data | None):
+        """
+        Analiz edilecek veriyi yükler.
+
+        Args:
+            data (Data | None): Veri nesnesi.
+        """
         self.data = self.__load(data)
 
     def Mean(self, col: str) -> PD.Series | float | int | None:
+        """
+        Belirtilen sütunun aritmetik ortalamasını hesaplar.
+
+        Args:
+            col (str): İşlem yapılacak sütun adı.
+
+        Returns:
+            PD.Series | float | int | None: Ortalama değeri veya hata durumunda None.
+        """
         return self.__mean(col)
 
     def Variance(self, col: str) -> PD.Series | float | int | None:
+        """
+        Belirtilen sütunun varyansını hesaplar.
+
+        Args:
+            col (str): İşlem yapılacak sütun adı.
+
+        Returns:
+            PD.Series | float | int | None: Varyans değeri veya hata durumunda None.
+        """
         return self.__variance(col)
 
     def Median(self, col: str) -> PD.Series | float | int | None:
+        """
+        Belirtilen sütunun medyanını hesaplar.
+
+        Args:
+            col (str): İşlem yapılacak sütun adı.
+
+        Returns:
+            PD.Series | float | int | None: Medyan değeri veya hata durumunda None.
+        """
         return self.__median(col)
 
     def __load(self, data: Data | None) -> PD.DataFrame | None:

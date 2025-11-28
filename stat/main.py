@@ -11,13 +11,14 @@ def main():
 if __name__ == "__main__":
     main()
 
-    file = File("/home/bhh/Belgeler/python/stat/stat/data.csv")
+    file = File("your_file_path")
 
     data = Data()
     data.Load(file)
 
     stat = Statistics()
     stat.Load(data)
+    
     print(f"{file.GetPath()} dosyasindaki Matematik notlarina iliskin veriler:")
     print(f"Aritmetik Ortalama: {stat.Mean('math_score')}")
     print(f"Varyans: {stat.Variance('math_score')}")

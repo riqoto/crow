@@ -3,10 +3,33 @@ from file import File, FileExtension
 
 
 class Data:
+    """
+    Veri yükleme ve erişim işlemlerini yöneten sınıf.
+
+    Farklı dosya formatlarından (CSV, Excel, JSON, TXT) veri okuyarak
+    pandas DataFrame formatına dönüştürür.
+
+    Attributes:
+        data (PD.DataFrame | None): Yüklenen veri seti.
+    """
     def GetData(self) -> PD.DataFrame | None:
+        """
+        Yüklenen veriyi döndürür.
+
+        Returns:
+            PD.DataFrame | None: Yüklenen veri seti veya veri yoksa None.
+        """
         return self.__get_data()
 
     def Load(self, file: File):
+        """
+        Belirtilen dosyadan veriyi yükler.
+
+        Dosya uzantısına göre uygun okuma yöntemini seçer.
+
+        Args:
+            file (File): Yüklenecek dosya nesnesi.
+        """
         self.__load(file)
 
     def __load(self, file: File):
