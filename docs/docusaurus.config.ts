@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Crow',
-  tagline: 'A Python library for statistical analysis across multiple data formats',
+  tagline: 'Pandas tabanlı basit istatistik wrapper\'ı',
   favicon: 'img/crow-icon.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -31,8 +31,20 @@ const config: Config = {
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'tr',
+    locales: ['tr', 'en'],
+    localeConfigs: {
+      tr: {
+        label: 'Türkçe',
+        direction: 'ltr',
+        htmlLang: 'tr-TR',
+      },
+      en: {
+        label: 'English',
+        direction: 'ltr',
+        htmlLang: 'en-US',
+      },
+    },
   },
 
   presets: [
@@ -89,12 +101,8 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Getting Started',
+              label: 'Başlarken',
               to: '/docs/intro',
-            },
-            {
-              label: 'User Guide',
-              to: '/docs/user-guide',
             },
           ],
         },

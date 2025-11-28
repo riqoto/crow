@@ -1,0 +1,417 @@
+---
+sidebar_position: 4
+---
+
+import ClassAccordion from '@site/src/components/ClassAccordion';
+
+# Data Class
+
+The `Data` class handles loading data from various file formats into pandas DataFrames.
+
+## Overview
+
+Located in `crow/data.py`, this class automatically detects file format and loads data using the appropriate pandas reader.
+
+## Class Reference
+
+<ClassAccordion
+  className="Data"
+  description="Veri yükleme ve erişim işlemlerini yöneten sınıf. Farklı dosya formatlarından (CSV, Excel, JSON, TXT) veri okuyarak pandas DataFrame formatına dönüştürür."
+  attributes={[
+    "data (PD.DataFrame | None): Yüklenen veri seti"
+  ]}
+  methods={[
+    {
+      name: "GetData",
+      signature: "GetData() -> PD.DataFrame | None",
+      description: "Yüklenen veriyi döndürür.",
+      params: "None",
+      returns: "PD.DataFrame | None: Yüklenen veri seti veya veri yoksa None"
+    },
+    {
+      name: "Load",
+      signature: "Load(file: File) -> None",
+      description: "Belirtilen dosyadan veriyi yükler. Dosya uzantısına göre uygun okuma yöntemini seçer.",
+      params: "file (File): Yüklenecek dosya nesnesi",
+      returns: "None"
+    }
+  ]}
+/>
+
+## Usage Examples
+
+### Basic Data Loading
+
+```python
+from crow.file import File
+from crow.data import Data
+
+# Create file and data objects
+file = File("sales.csv")
+data = Data()
+
+# Load data
+data.Load(file)
+
+# Access the DataFrame
+df = data.GetData()
+print(df.head())
+```
+
+### Loading Different Formats
+
+#### CSV Files
+
+```python
+file = File("data.csv")
+data = Data()
+data.Load(file)  # Uses pd.read_csv()
+
+df = data.GetData()
+print(f"Loaded {len(df)} rows from CSV")
+```
+
+#### Excel Files
+
+```python
+# Modern Excel (.xlsx)
+file = File("report.xlsx")
+data = Data()
+data.Load(file)  # Uses pd.read_excel()
+
+# Legacy Excel (.xls)
+file = File("old_report.xls")
+data.Load(file)  # Also uses pd.read_excel()
+```
+
+#### JSON Files
+
+```python
+file = File("config.json")
+data = Data()
+data.Load(file)  # Uses pd.read_json()
+
+df = data.GetData()
+```
+
+#### Text Files
+
+```python
+file = File("log.txt")
+data = Data()
+data.Load(file)  # Uses pd.read_csv() (treats as CSV)
+```
+
+### Working with the DataFrame
+
+```python
+from crow.file import File
+from crow.data import Data
+
+# Load data
+file = File("students.csv")
+data = Data()
+data.Load(file)
+
+# Get DataFrame and perform pandas operations
+df = data.GetData()
+
+if df is not None:
+    # Basic info
+    print(f"Shape: {df.shape}")
+    print(f"Columns: {df.columns.tolist()}")
+    
+    # Data preview
+    print("\nFirst 5 rows:")
+    print(df.head())
+    
+    # Data types
+    print("\nData types:")
+    print(df.dtypes)
+    
+    # Summary statistics
+    print("\nSummary:")
+    print(df.describe())
+```
+
+### Checking for Valid Data
+
+```python
+data = Data()
+data.Load(file)
+
+df = data.GetData()
+
+if df is None:
+    print("Failed to load data")
+elif df.empty:
+    print("Data loaded but file is empty")
+else:
+    print(f"Successfully loaded {len(df)} rows")
+```
+
+## Method Details
+
+### GetData()
+
+Returns the loaded pandas DataFrame.
+
+**Returns:**
+- `PD.DataFrame | None`: The loaded dataset, or None if no data is loaded
+
+**Example:**
+```python
+data = Data()
+data.Load(file)
+
+df = data.GetData()
+if df is not None:
+    print("Data loaded successfully")
+```
+
+### Load(file)
+
+Loads data from a File object. Automatically selects the appropriate pandas reader based on file extension.
+
+**Parameters:**
+- `file` (File): A File object containing the path to load
+
+**Returns:**
+- None
+
+**Supported Formats:**
+
+| Extension | Reader Used | Notes |
+|-----------|------------|-------|
+| `.csv` | `pd.read_csv()` | Standard CSV format |
+| `.xlsx` | `pd.read_excel()` | Requires openpyxl |
+| `.xls` | `pd.read_excel()` | Legacy Excel format |
+| `.json` | `pd.read_json()` | JSON format |
+| `.txt` | `pd.read_csv()` | Treated as CSV |
+
+**Example:**
+```python
+from crow.file import File
+from crow.data import Data
+
+file = File("data.csv")
+data = Data()
+data.Load(file)  # Loads using pd.read_csv()
+```
+
+## Format-Specific Details
+
+### CSV Format
+
+```python
+# CSV files are loaded with default settings
+file = File("data.csv")
+data = Data()
+data.Load(file)
+
+# For custom CSV settings, access DataFrame directly
+df = data.GetData()
+# Or use pd.read_csv() directly with custom parameters
+```
+
+### Excel Format
+
+```python
+# Excel files require openpyxl
+# Install with: pip install openpyxl
+
+file = File("spreadsheet.xlsx")
+data = Data()
+data.Load(file)
+
+df = data.GetData()
+```
+
+:::tip
+Make sure you have `openpyxl` installed for Excel support:
+```bash
+pip install openpyxl
+```
+:::
+
+### JSON Format
+
+```python
+# JSON files should be in records format
+# Example JSON structure:
+# [
+#   {"name": "Alice", "score": 95},
+#   {"name": "Bob", "score": 87}
+# ]
+
+file = File("data.json")
+data = Data()
+data.Load(file)
+```
+
+### Text Files
+
+```python
+# .txt files are treated as CSV
+# They should be comma-delimited
+
+file = File("data.txt")
+data = Data()
+data.Load(file)
+```
+
+## Complete Workflow Example
+
+```python
+from crow.file import File, FileExtension
+from crow.data import Data
+
+def load_and_preview(filepath: str):
+    """Load data and show preview."""
+    try:
+        # Validate file
+        file = File(filepath)
+        
+        if not file.Validate():
+            print(f"Invalid file format: {file.GetSuffix()}")
+            return None
+        
+        # Load data
+        data = Data()
+        data.Load(file)
+        
+        # Get DataFrame
+        df = data.GetData()
+        
+        if df is None:
+            print("Failed to load data")
+            return None
+        
+        # Show info
+        print(f"File: {file.GetPath()}")
+        print(f"Format: {file.GetSuffix().value}")
+        print(f"Shape: {df.shape}")
+        print("\nFirst 5 rows:")
+        print(df.head())
+        
+        return data
+        
+    except FileNotFoundError:
+        print(f"File not found: {filepath}")
+        return None
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        return None
+
+# Usage
+data = load_and_preview("students.csv")
+```
+
+## Integration with Statistics
+
+```python
+from crow.file import File
+from crow.data import Data
+from crow.statistics import Statistics
+
+# Complete workflow
+file = File("scores.csv")
+data = Data()
+data.Load(file)
+
+# Pass to statistics
+stats = Statistics()
+stats.Load(data)
+
+# Analyze
+mean = stats.Mean('test_score')
+print(f"Average score: {mean}")
+```
+
+## Error Handling
+
+### No Data Loaded
+
+```python
+data = Data()
+df = data.GetData()  # Returns None if no data loaded
+
+if df is None:
+    print("No data available")
+```
+
+### Invalid File Format
+
+```python
+file = File("data.pdf")  # File exists but unsupported format
+
+if not file.Validate():
+    print("Cannot load this file type")
+else:
+    data = Data()
+    data.Load(file)
+```
+
+### Empty Files
+
+```python
+data = Data()
+data.Load(file)
+
+df = data.GetData()
+if df is not None and df.empty:
+    print("File is empty")
+```
+
+## Best Practices
+
+### Always Check Data After Loading
+
+```python
+data = Data()
+data.Load(file)
+
+df = data.GetData()
+if df is None or df.empty:
+    print("No valid data loaded")
+    return
+
+# Proceed with analysis
+```
+
+### Validate Before Loading
+
+```python
+if file.Validate():
+    data.Load(file)
+else:
+    print("File validation failed")
+```
+
+### Access DataFrame for Advanced Operations
+
+```python
+# For operations beyond basic statistics
+df = data.GetData()
+
+if df is not None:
+    # Use full pandas functionality
+    filtered = df[df['age'] > 18]
+    grouped = df.groupby('category')
+    # ... etc
+```
+
+## Implementation Notes
+
+- Uses pattern matching (`match/case`) for format detection
+- Delegates to appropriate pandas reader for each format
+- Stores data internally as pandas DataFrame
+- Returns None for failed operations rather than raising exceptions
+- Private `__load()` method handles actual file reading
+- Private `__get_data()` validates DataFrame before returning
+
+## See Also
+
+- [File Class](./file.mdx) - For file validation
+- [Statistics Class](./statistics.mdx) - For analyzing loaded data
+- [Pandas Documentation](https://pandas.pydata.org/docs/) - For DataFrame operations

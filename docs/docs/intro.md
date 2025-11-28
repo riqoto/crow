@@ -2,69 +2,49 @@
 sidebar_position: 1
 ---
 
-# Introduction to Crow
+# Crow
 
-Welcome to **Crow** - a Python library designed for statistical analysis across multiple data formats.
+Pandas tabanlı basit bir istatistik wrapper'ı.
 
-## What is Crow?
+## Nedir?
 
-Crow is a lightweight statistical analysis library that simplifies working with data from various file formats. Whether you're analyzing CSV files, Excel spreadsheets, JSON data, or text files, Crow provides a unified interface for loading and analyzing your data.
+Crow, farklı dosya formatlarından (CSV, Excel, JSON, TXT) veri yükleyip temel istatistiksel hesaplamalar yapmanızı sağlayan minimal bir Python kütüphanesidir.
 
-## Key Features
+## Kurulum
 
-### 📊 Multi-Format Support
+```bash
+git clone https://github.com/riqoto/stat.git
+cd stat
+pip install -e .
+```
 
-Crow supports reading data from:
-- **CSV** files (`.csv`)
-- **Excel** files (`.xlsx`, `.xls`)
-- **JSON** files (`.json`)
-- **Text** files (`.txt`)
-
-### 🧮 Statistical Analysis
-
-Perform essential statistical calculations:
-- **Mean** (arithmetic average)
-- **Variance** (measure of data spread)
-- **Median** (middle value)
-
-### 🚀 Simple API
-
-Built with simplicity in mind:
-- Easy-to-use class-based interface
-- Powered by pandas for reliable data processing
-- Type hints for better IDE support
-
-## Quick Example
+## Hızlı Kullanım
 
 ```python
 from crow.file import File
 from crow.data import Data
 from crow.statistics import Statistics
 
-# Load data from a CSV file
+# Dosya yükle
 file = File("data.csv")
 data = Data()
 data.Load(file)
 
-# Perform statistical analysis
+# İstatistik hesapla
 stats = Statistics()
 stats.Load(data)
 
-# Get results
-print(f"Mean: {stats.Mean('column_name')}")
-print(f"Variance: {stats.Variance('column_name')}")
-print(f"Median: {stats.Median('column_name')}")
+print(f"Ortalama: {stats.Mean('sutun_adi')}")
+print(f"Varyans: {stats.Variance('sutun_adi')}")
+print(f"Medyan: {stats.Median('sutun_adi')}")
 ```
 
-## Why Crow?
+## Özellikler
 
-- **Unified Interface**: Work with different file formats using the same API
-- **Type Safe**: Built with type hints for better development experience
-- **Pandas-Powered**: Leverages the battle-tested pandas library
-- **Extensible**: Easy to extend with additional statistical methods
+- CSV, Excel (.xlsx, .xls), JSON, TXT desteği
+- Ortalama, varyans, medyan hesaplama
+- Pandas DataFrame'e doğrudan erişim
 
-## Next Steps
+## Sonraki Adımlar
 
-- [Getting Started](./getting-started.md) - Installation and setup guide
-- [User Guide](./user-guide.md) - Comprehensive usage guide
-- [API Reference](./api/overview.md) - Detailed API documentation
+- [API Referansı](./api/overview.md) - Sınıflar ve methodlar

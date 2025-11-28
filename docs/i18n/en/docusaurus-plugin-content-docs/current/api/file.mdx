@@ -1,0 +1,312 @@
+---
+sidebar_position: 3
+---
+
+import ClassAccordion from '@site/src/components/ClassAccordion';
+
+# File Class
+
+The `File` class handles file path validation and format detection.
+
+## Overview
+
+Located in `crow/file.py`, this class validates file existence and ensures the file has a supported format.
+
+## Enum: FileExtension
+
+<ClassAccordion
+  className="FileExtension"
+  description="Desteklenen dosya uzantılarını tanımlayan Enum sınıfı."
+  methods={[]}
+  attributes={[
+    'CSV = ".csv"',
+    'EXCEL = ".xlsx"',
+    'EXCEL_OLD = ".xls"',
+    'JSON = ".json"',
+    'TXT = ".txt"'
+  ]}
+/>
+
+## Class: File
+
+<ClassAccordion
+  className="File"
+  description="Dosya işlemlerini yöneten sınıf. Bu sınıf, dosya varlığını ve uzantısını doğrulamak ve dosya yolunu yönetmek için kullanılır."
+  attributes={[
+    "file (str): İşlem yapılacak dosyanın yolu"
+  ]}
+  methods={[
+    {
+      name: "__init__",
+      signature: "__init__(file: str)",
+      description: "File sınıfını başlatır. Dosya bulunamazsa FileNotFoundError hatası fırlatır.",
+      params: "file (str): Dosya yolu",
+      returns: "None"
+    },
+    {
+      name: "Validate",
+      signature: "Validate() -> bool",
+      description: "Dosyanın geçerli olup olmadığını kontrol eder. Hem dosyanın varlığını hem de desteklenen bir uzantıya sahip olup olmadığını doğrular.",
+      params: "None",
+      returns: "bool: Dosya geçerliyse True, değilse False döner"
+    },
+    {
+      name: "GetSuffix",
+      signature: "GetSuffix() -> FileExtension | None",
+      description: "Dosyanın uzantısını döndürür.",
+      params: "None",
+      returns: "FileExtension | None: Dosya uzantısı (Enum olarak) veya geçersizse None"
+    },
+    {
+      name: "GetPath",
+      signature: "GetPath() -> str",
+      description: "Dosyanın tam yolunu döndürür.",
+      params: "None",
+      returns: "str: Dosya yolu"
+    }
+  ]}
+/>
+
+## Usage Examples
+
+### Creating a File Object
+
+```python
+from crow.file import File
+
+# Create a file object
+try:
+    file = File("data.csv")
+    print(f"File loaded: {file.GetPath()}")
+except FileNotFoundError:
+    print("File does not exist!")
+```
+
+### Validating File Format
+
+```python
+from crow.file import File
+
+file = File("data.csv")
+
+if file.Validate():
+    print("File is valid and ready to use")
+else:
+    print("Invalid file format")
+```
+
+### Checking File Extension
+
+```python
+from crow.file import File, FileExtension
+
+file = File("sales_data.xlsx")
+suffix = file.GetSuffix()
+
+if suffix == FileExtension.EXCEL:
+    print("This is an Excel file (.xlsx)")
+elif suffix == FileExtension.CSV:
+    print("This is a CSV file")
+```
+
+### Working with Different Formats
+
+```python
+from crow.file import File, FileExtension
+
+files = [
+    "data.csv",
+    "report.xlsx",
+    "legacy.xls",
+    "config.json",
+    "log.txt"
+]
+
+for filepath in files:
+    try:
+        file = File(filepath)
+        suffix = file.GetSuffix()
+        
+        print(f"{filepath}:")
+        print(f"  Valid: {file.Validate()}")
+        print(f"  Format: {suffix.value if suffix else 'Unknown'}")
+    except FileNotFoundError:
+        print(f"{filepath}: File not found")
+```
+
+## Method Details
+
+### __init__(file)
+
+Initializes the File object with the given file path.
+
+**Parameters:**
+- `file` (str): Path to the file
+
+**Raises:**
+- `FileNotFoundError`: If the file doesn't exist at the specified path
+
+**Example:**
+```python
+try:
+    file = File("data.csv")
+except FileNotFoundError as e:
+    print(f"Error: {e}")
+```
+
+### Validate()
+
+Validates that the file exists and has a supported format.
+
+**Returns:**
+- `bool`: True if valid, False otherwise
+
+**Validation Checks:**
+1. File exists at the specified path
+2. File has a supported extension
+
+**Example:**
+```python
+file = File("data.csv")
+if file.Validate():
+    # Proceed with data loading
+    pass
+else:
+    print("Cannot process this file")
+```
+
+### GetSuffix()
+
+Returns the file extension as a FileExtension enum value.
+
+**Returns:**
+- `FileExtension | None`: The file extension enum, or None if unsupported
+
+**Example:**
+```python
+from crow.file import FileExtension
+
+file = File("data.xlsx")
+suffix = file.GetSuffix()
+
+if suffix == FileExtension.EXCEL:
+    print("Excel file detected")
+```
+
+### GetPath()
+
+Returns the full file path.
+
+**Returns:**
+- `str`: The file path as a string
+
+**Example:**
+```python
+file = File("../data/sales.csv")
+full_path = file.GetPath()
+print(f"Working with: {full_path}")
+```
+
+## FileExtension Enum
+
+The `FileExtension` enum defines all supported file formats:
+
+| Enum Value | Extension | Description |
+|-----------|-----------|-------------|
+| `CSV` | `.csv` | Comma-separated values |
+| `EXCEL` | `.xlsx` | Modern Excel format |
+| `EXCEL_OLD` | `.xls` | Legacy Excel format |
+| `JSON` | `.json` | JavaScript Object Notation |
+| `TXT` | `.txt` | Plain text (treated as CSV) |
+
+### Using FileExtension
+
+```python
+from crow.file import FileExtension
+
+# Check specific format
+if file.GetSuffix() == FileExtension.CSV:
+    print("Processing CSV file...")
+
+# Get all supported extensions
+all_extensions = [ext.value for ext in FileExtension]
+print(f"Supported formats: {', '.join(all_extensions)}")
+```
+
+## Error Handling
+
+### FileNotFoundError
+
+Raised when the file doesn't exist:
+
+```python
+import os
+
+filepath = "data.csv"
+if os.path.exists(filepath):
+    file = File(filepath)
+else:
+    print(f"File {filepath} not found")
+```
+
+### Invalid Format Handling
+
+```python
+file = File("document.pdf")  # Will be created
+
+if not file.Validate():
+    suffix = file.GetSuffix()
+    print(f"Unsupported format: {suffix}")
+    print("Please use: CSV, Excel, JSON, or TXT files")
+```
+
+## Best Practices
+
+### Always Validate Before Loading
+
+```python
+file = File("data.csv")
+if file.Validate():
+    data = Data()
+    data.Load(file)
+else:
+    print("File validation failed")
+```
+
+### Check Extension for Special Handling
+
+```python
+file = File("data.xlsx")
+suffix = file.GetSuffix()
+
+if suffix == FileExtension.EXCEL:
+    print("Excel file detected")
+    print("Ensure openpyxl is installed")
+```
+
+### Use Try-Except for File Creation
+
+```python
+try:
+    file = File("path/to/data.csv")
+    if file.Validate():
+        print("Ready to process")
+except FileNotFoundError:
+    print("Please check the file path")
+except Exception as e:
+    print(f"Unexpected error: {e}")
+```
+
+## Implementation Notes
+
+- File validation is performed using `os.path.isfile()`
+- Extension detection uses `pathlib.Path.suffix`
+- The class validates on construction (raises error if file not found)
+- Additional validation via `Validate()` checks file format support
+- Private methods handle internal validation logic
+
+## See Also
+
+- [Data Class](./data.mdx) - For loading validated files
+- [FileExtension Enum](#fileextension-enum) - Supported file formats
+- [Getting Started](/docs/getting-started) - Installation and setup

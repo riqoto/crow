@@ -19,12 +19,12 @@ function HomepageHeader() {
           <Link
             className="button button--primary button--lg"
             to="/docs/intro">
-            Başlayın
+            Get Started
           </Link>
           <Link
             className="button button--secondary button--lg margin-left--md"
             to="/docs/api/overview">
-            API
+            View API
           </Link>
         </div>
       </div>
@@ -40,30 +40,34 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Basit',
-    icon: '🚀',
-    description: (
-      <>
-        Pandas üzerine kurulu basit bir wrapper. CSV, Excel, JSON dosyalarından
-        veri yükleyin ve temel istatistikler hesaplayın.
-      </>
-    ),
-  },
-  {
-    title: 'Pratik',
+    title: 'Multi-Format Support',
     icon: '📊',
     description: (
       <>
-        Ortalama, varyans ve medyan hesaplamaları için kullanışlı arayüz.
+        Crow supports multiple data formats including CSV, Excel (XLSX/XLS),
+        JSON, and TXT files. Load and analyze data from any source with a
+        unified interface.
       </>
     ),
   },
   {
-    title: 'Hafif',
-    icon: '⚡',
+    title: 'Statistical Analysis',
+    icon: '🧮',
     description: (
       <>
-        Minimal bağımlılık. Sadece pandas ve openpyxl.
+        Perform essential statistical calculations like mean, variance, and
+        median on your datasets. Built on top of pandas for reliable and
+        efficient data processing.
+      </>
+    ),
+  },
+  {
+    title: 'Simple & Clean API',
+    icon: '🚀',
+    description: (
+      <>
+        Intuitive API design makes it easy to get started. Load your data,
+        run your analysis, and get results in just a few lines of code.
       </>
     ),
   },
@@ -99,8 +103,8 @@ export default function Home(): React.JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`${siteConfig.title}`}
-      description="Pandas tabanlı basit istatistik wrapper'ı">
+      title={`${siteConfig.title} - Statistical Analysis Library`}
+      description="A Python library for statistical analysis across multiple data formats">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
