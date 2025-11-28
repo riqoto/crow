@@ -6,14 +6,14 @@ Bu bölüm, `stat` projesindeki modüllerin, sınıfların ve fonksiyonların de
 .. toctree::
    :maxdepth: 2
 
-   stat.file
-   stat.data
-   stat.statistics
+   file
+   data
+   statistics
 
 File Modülü
 -----------
 
-.. automodule:: stat.file
+.. automodule:: file
    :members:
    :undoc-members:
    :show-inheritance:
@@ -21,7 +21,7 @@ File Modülü
 Data Modülü
 -----------
 
-.. automodule:: stat.data
+.. automodule:: data
    :members:
    :undoc-members:
    :show-inheritance:
@@ -29,7 +29,7 @@ Data Modülü
 Statistics Modülü
 -----------------
 
-.. automodule:: stat.statistics
+.. automodule:: statistics
    :members:
    :undoc-members:
    :show-inheritance:
