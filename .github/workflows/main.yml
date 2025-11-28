@@ -1,4 +1,4 @@
-name: Docs
+name: Deploy Docs to GitHub Pages
 
 on:
   push:
@@ -24,18 +24,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.12'
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
           
       - name: Install dependencies
-        run: |
-          pip install -r docs/requirements.txt
+        working-directory: ./docs
+        run: npm ci
           
-      - name: Build Sphinx docs
-        run: |
-          sphinx-build -b html docs/ docs/_build/html
+      - name: Build Docusaurus site
+        working-directory: ./docs
+        run: npm run build
           
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -43,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'docs/_build/html'
+          path: 'docs/build'
           
       - name: Deploy to GitHub Pages
         id: deployment

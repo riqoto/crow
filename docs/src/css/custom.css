@@ -1,0 +1,362 @@
+/**
+ * Custom CSS for Crow Documentation
+ * Buck2-inspired design with custom color scheme
+ */
+
+/* Color Palette:
+ * Primary: #FFE700 (Bright Yellow)
+ * Light: #FEFFA7 (Pale Yellow)
+ * Mint: #B6FFA1 (Mint Green)
+ * Accent: #00FF9C (Bright Cyan)
+ */
+
+:root {
+  /* Primary colors based on custom scheme */
+  --ifm-color-primary: #FFE700;
+  --ifm-color-primary-dark: #e6d000;
+  --ifm-color-primary-darker: #cca000;
+  --ifm-color-primary-darkest: #b38f00;
+  --ifm-color-primary-light: #FEFFA7;
+  --ifm-color-primary-lighter: #B6FFA1;
+  --ifm-color-primary-lightest: #00FF9C;
+  
+  /* Secondary accent colors */
+  --crow-yellow: #FFE700;
+  --crow-yellow-light: #FEFFA7;
+  --crow-mint: #B6FFA1;
+  --crow-cyan: #00FF9C;
+  
+  /* Hero gradient */
+  --crow-gradient: linear-gradient(135deg, 
+    #FFE700 0%, 
+    #B6FFA1 50%, 
+    #00FF9C 100%);
+  
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 231, 0, 0.1);
+  
+  /* Custom font */
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  
+  /* Button styling */
+  --ifm-button-background-color: var(--crow-yellow);
+  --ifm-button-color: #000;
+  --ifm-button-border-radius: 0.5rem;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #00FF9C;
+  --ifm-color-primary-dark: #00e68d;
+  --ifm-color-primary-darker: #00cc7d;
+  --ifm-color-primary-darkest: #00b36e;
+  --ifm-color-primary-light: #B6FFA1;
+  --ifm-color-primary-lighter: #FEFFA7;
+  --ifm-color-primary-lightest: #FFE700;
+  
+  --docusaurus-highlighted-code-line-bg: rgba(0, 255, 156, 0.15);
+  
+  /* Dark mode background adjustments */
+  --ifm-background-color: #1a1a1a;
+  --ifm-navbar-background-color: #242424;
+}
+
+/* Hero Section - Buck2 Inspired */
+.hero {
+  background: var(--crow-gradient);
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.03) 10px,
+    rgba(255, 255, 255, 0.03) 20px
+  );
+  pointer-events: none;
+}
+
+.hero__title {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #000;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.hero__subtitle {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Buttons */
+.button {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.button--primary {
+  background: var(--crow-yellow);
+  color: #000;
+  border-color: var(--crow-yellow);
+}
+
+.button--primary:hover {
+  background: var(--crow-cyan);
+  border-color: var(--crow-cyan);
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 156, 0.3);
+}
+
+.button--secondary {
+  background: transparent;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.button--secondary:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Feature Cards */
+.feature {
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+  background: var(--ifm-card-background-color);
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 255, 156, 0.2);
+}
+
+.feature__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.feature__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--ifm-color-primary);
+}
+
+/* Navbar enhancements */
+.navbar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.navbar__brand {
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.navbar__logo {
+  height: 2rem;
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.navbar__logo:hover {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.navbar__link {
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.navbar__link:hover {
+  color: var(--ifm-color-primary);
+}
+
+/* Footer */
+.footer {
+  background: linear-gradient(180deg, 
+    var(--ifm-footer-background-color) 0%, 
+    #000 100%);
+  padding: 3rem 0 2rem 0;
+}
+
+.footer__title {
+  color: var(--crow-cyan);
+  font-weight: 700;
+}
+
+.footer__link-item {
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.footer__link-item:hover {
+  color: var(--crow-yellow);
+  transform: translateX(5px);
+}
+
+/* Code blocks */
+.prism-code {
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sidebar */
+.menu__link {
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.menu__link:hover {
+  background: linear-gradient(90deg, 
+    rgba(255, 231, 0, 0.1) 0%, 
+    rgba(0, 255, 156, 0.1) 100%);
+}
+
+.menu__link--active {
+  background: var(--crow-gradient);
+  color: #000;
+  font-weight: 700;
+}
+
+/* Accordion styles for API documentation */
+.accordion {
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.accordion:hover {
+  border-color: var(--crow-cyan);
+  box-shadow: 0 4px 12px rgba(0, 255, 156, 0.2);
+}
+
+.accordion__header {
+  background: var(--ifm-card-background-color);
+  padding: 1.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s ease;
+  user-select: none;
+}
+
+.accordion__header:hover {
+  background: linear-gradient(90deg, 
+    rgba(255, 231, 0, 0.1) 0%, 
+    rgba(182, 255, 161, 0.1) 100%);
+}
+
+.accordion__icon {
+  transition: transform 0.3s ease;
+  font-size: 1.5rem;
+  color: var(--crow-cyan);
+}
+
+.accordion--open .accordion__icon {
+  transform: rotate(90deg);
+}
+
+.accordion__content {
+  padding: 0 1.5rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.accordion--open .accordion__content {
+  padding: 1.5rem;
+  max-height: 2000px;
+}
+
+.method {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--ifm-code-background);
+  border-left: 4px solid var(--crow-cyan);
+  border-radius: 0.5rem;
+}
+
+.method__name {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--crow-cyan);
+  margin-bottom: 0.5rem;
+}
+
+.method__description {
+  color: var(--ifm-color-emphasis-800);
+  margin-bottom: 0.75rem;
+}
+
+.method__params {
+  font-size: 0.9rem;
+  font-family: monospace;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature,
+.accordion {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .hero__title {
+    font-size: 2.5rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .button {
+    padding: 0.6rem 1.5rem;
+  }
+}

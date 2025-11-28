@@ -1,0 +1,205 @@
+---
+sidebar_position: 2
+---
+
+import ClassAccordion from '@site/src/components/ClassAccordion';
+
+# Statistics Class
+
+The `Statistics` class provides methods for performing statistical calculations on loaded data.
+
+## Overview
+
+Located in `crow/statistics.py`, this class works with pandas DataFrames to compute common statistical measures.
+
+## Class Reference
+
+<ClassAccordion
+  className="Statistics"
+  description="İstatistiksel hesaplamaları yapan sınıf. Yüklenen veri seti üzerinde ortalama, varyans ve medyan gibi temel istatistiksel analizleri gerçekleştirir."
+  attributes={[
+    "data (PD.DataFrame | None): Analiz edilecek veri seti"
+  ]}
+  methods={[
+    {
+      name: "Load",
+      signature: "Load(data: Data | None) -> None",
+      description: "Analiz edilecek veriyi yükler.",
+      params: "data (Data | None): Veri nesnesi",
+      returns: "None"
+    },
+    {
+      name: "Mean",
+      signature: "Mean(col: str) -> PD.Series | float | int | None",
+      description: "Belirtilen sütunun aritmetik ortalamasını hesaplar.",
+      params: "col (str): İşlem yapılacak sütun adı",
+      returns: "PD.Series | float | int | None: Ortalama değeri veya hata durumunda None"
+    },
+    {
+      name: "Variance",
+      signature: "Variance(col: str) -> PD.Series | float | int | None",
+      description: "Belirtilen sütunun varyansını hesaplar.",
+      params: "col (str): İşlem yapılacak sütun adı",
+      returns: "PD.Series | float | int | None: Varyans değeri veya hata durumunda None"
+    },
+    {
+      name: "Median",
+      signature: "Median(col: str) -> PD.Series | float | int | None",
+      description: "Belirtilen sütunun medyanını hesaplar.",
+      params: "col (str): İşlem yapılacak sütun adı",
+      returns: "PD.Series | float | int | None: Medyan değeri veya hata durumunda None"
+    }
+  ]}
+/>
+
+## Usage Examples
+
+### Basic Statistics
+
+```python
+from crow.file import File
+from crow.data import Data
+from crow.statistics import Statistics
+
+# Load data
+file = File("students.csv")
+data = Data()
+data.Load(file)
+
+# Create statistics object
+stats = Statistics()
+stats.Load(data)
+
+# Calculate statistics
+mean_score = stats.Mean('math_score')
+variance_score = stats.Variance('math_score')
+median_score = stats.Median('math_score')
+
+print(f"Mean: {mean_score}")
+print(f"Variance: {variance_score}")
+print(f"Median: {median_score}")
+```
+
+### Analyzing Multiple Columns
+
+```python
+# Analyze all numeric columns
+columns = ['math_score', 'science_score', 'english_score']
+
+for col in columns:
+    print(f"\nStatistics for {col}:")
+    print(f"  Mean:     {stats.Mean(col):.2f}")
+    print(f"  Variance: {stats.Variance(col):.2f}")
+    print(f"  Median:   {stats.Median(col):.2f}")
+```
+
+### Error Handling
+
+```python
+# Handle potential errors
+result = stats.Mean('nonexistent_column')
+if result is None:
+    print("Column not found or data not loaded")
+else:
+    print(f"Mean: {result}")
+```
+
+## Method Details
+
+### Load(data)
+
+Loads data for statistical analysis.
+
+**Parameters:**
+- `data` (Data | None): A Data object containing the dataset to analyze
+
+**Returns:**
+- None
+
+**Example:**
+```python
+stats = Statistics()
+stats.Load(data)  # data is a Data object
+```
+
+### Mean(col)
+
+Calculates the arithmetic mean (average) of a specified column.
+
+**Mathematical Formula:**
+```
+Mean = (Σ xᵢ) / n
+```
+
+Where:
+- xᵢ are the values in the column
+- n is the number of values
+
+**Parameters:**
+- `col` (str): Name of the column to analyze
+
+**Returns:**
+- `PD.Series | float | int | None`: The mean value, or None if the column doesn't exist or data isn't loaded
+
+**Example:**
+```python
+average_age = stats.Mean('age')
+print(f"Average age: {average_age:.2f}")
+```
+
+### Variance(col)
+
+Calculates the variance of a specified column. Variance measures how far values spread from their mean.
+
+**Mathematical Formula:**
+```
+Variance = Σ(xᵢ - μ)² / n
+```
+
+Where:
+- xᵢ are the values in the column
+- μ is the mean
+- n is the number of values
+
+**Parameters:**
+- `col` (str): Name of the column to analyze
+
+**Returns:**
+- `PD.Series | float | int | None`: The variance, or None if the column doesn't exist or data isn't loaded
+
+**Example:**
+```python
+score_variance = stats.Variance('test_score')
+std_dev = score_variance ** 0.5  # Standard deviation
+print(f"Variance: {score_variance:.2f}")
+print(f"Std Dev: {std_dev:.2f}")
+```
+
+### Median(col)
+
+Calculates the median (middle value) of a specified column. The median is the value separating the higher half from the lower half of the data.
+
+**Parameters:**
+- `col` (str): Name of the column to analyze
+
+**Returns:**
+- `PD.Series | float | int | None`: The median value, or None if the column doesn't exist or data isn't loaded
+
+**Example:**
+```python
+median_salary = stats.Median('salary')
+print(f"Median salary: ${median_salary:,.2f}")
+```
+
+## Implementation Notes
+
+- The `Statistics` class uses pandas methods internally for calculations (`mean()`, `var()`, `median()`)
+- All methods validate that data is loaded and the column exists before performing calculations
+- Returns `None` for invalid operations rather than raising exceptions
+- Private methods (`__mean`, `__variance`, `__median`, `__validate`) handle the actual computation logic
+
+## See Also
+
+- [Data Class](./data.mdx) - For loading data
+- [File Class](./file.mdx) - For file handling
+- [User Guide](/docs/user-guide) - Complete usage examples
