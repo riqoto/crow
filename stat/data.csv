@@ -1,0 +1,21 @@
+student_id,name,age,math_score,science_score,english_score,attendance_rate,study_hours
+1,Alice Johnson,18,85,92,88,95.5,15
+2,Bob Smith,19,78,85,82,88.0,12
+3,Charlie Davis,18,92,88,90,92.3,18
+4,Diana Wilson,20,88,91,85,90.1,14
+5,Ethan Brown,19,75,80,78,85.5,10
+6,Fiona Garcia,18,95,94,96,98.2,20
+7,George Martinez,19,82,87,84,89.7,13
+8,Hannah Lee,20,90,89,92,94.0,16
+9,Ivan Rodriguez,18,79,83,80,87.3,11
+10,Julia Anderson,19,87,90,89,91.5,15
+11,Kevin White,18,91,85,88,93.8,17
+12,Laura Thompson,20,84,88,86,90.2,14
+13,Michael Harris,19,77,82,79,86.4,11
+14,Nancy Clark,18,89,93,91,95.7,16
+15,Oliver Lewis,19,86,84,87,88.9,13
+16,Paula Walker,20,93,96,94,97.1,19
+17,Quinn Hall,18,81,86,83,89.5,12
+18,Rachel Young,19,88,91,90,92.8,15
+19,Samuel King,18,94,89,93,96.3,18
+20,Tina Wright,20,83,87,85,90.6,14
